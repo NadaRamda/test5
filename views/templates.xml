@@ -1,0 +1,136 @@
+<odoo>
+    <data>
+        <template id="sale_order_website" name="sale order">
+            <head>
+                <script type="text/javascript">
+                        function delete(row){
+                            var row = document.getElementById("n");
+                            row.remove();
+                        }
+                </script>
+            </head>
+<!--                        <t t-call="website.layout">-->
+            <t t-call="portal.portal_layout">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-md-12 table-responsive">
+                            <div>
+                                <t t-if="message">
+                                    <h1 style="font-size:50px; font-color:#6CB14F; text-align:center">
+                                        <t t-esc="message"/>
+                                    </h1>
+                                </t>
+                            </div>
+                         <h1 style="font-size:30px; font-color:#2DB294; text-align:center">sale orders</h1>
+
+                            <table  class="table table-hover table-sortable">
+                                <thead class="table-light">
+                                    <tr class="active" style="{hover:background-color:yellow;">
+                                        <td class="font-weight-bold">select</td>
+                                        <td class="font-weight-bold">#</td>
+                                        <td class="font-weight-bold">Customer</td>
+                                        <td class="font-weight-bold">SalesPerson</td>
+                                        <td class="font-weight-bold">Company</td>
+                                        <td class="font-weight-bold">Status</td>
+                                        <td class="font-weight-bold">Total</td>
+                                        <td class="font-weight-bold"></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="orders" t-as="o">
+                                        <tr id="n" class="hidden" hover="background-color:yellow;">
+                                            <td><input type="radio" onclick="changeColor(this.closest('tr'))"/></td>
+                                            <td>
+                                                <a t-attf-href="/get/sale_order_form/{{o.id}}">
+                                                    <span t-esc="o.name"/>
+                                                </a>
+                                            </td>
+                                            <td class="text-left">
+                                                <span t-esc="o.partner_id.name"
+                                                     />
+                                            </td>
+                                            <td>
+                                                <span t-esc="o.user_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="o.company_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-esc="o.state" class="badge badge-info badge-pill"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="o.amount_total"/>
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="fa fa-trash-o"
+                                                   t-attf-href="/delete/sale_orders/{{o.id}}"
+                                                   onclick="delete(this)">
+                                                </a>
+                                                <script>
+                                                        let prevRow = null;
+                                                        function changeColor(input) {
+                                                        const row = input.closest('tr');
+                                                        if (prevRow) {
+                                                        prevRow.style.backgroundColor = prevRow.rowIndex % 2 === 0 ? "#ffffff" : "#ffffff";
+                                                        }
+                                                        row.style.backgroundColor = "#EEEDD1";
+                                                        prevRow = row;
+                                                        }
+                                                </script>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <record id="menu_sale_order" model="website.menu">
+            <field name="name">sale_order</field>
+            <field name="url">/get/sale_orders/</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">10</field>
+        </record>
+    </data>
+</odoo>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--<td><span t-esc="o.get('Name')" class="form-control"/></td>-->
+        <!--<td><span t-esc="o.get('PartnerID')" class="form-control"/></td>-->
+        <!--<td><span t-esc="o.get('User')" class="form-control"/></td>-->
+        <!--<td><span t-esc="o.get('CompanyID')" class="form-control"/></td>-->
+        <!--<td><span t-esc="o.get('State')" class="form-control"/></td>-->
+        <!--<td><span t-esc="o.get('Total')" class="form-control"/></td>-->
+
+
+
+
+
+
+

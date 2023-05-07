@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="sale_order_form" name="sale order form">
+             <tr t-foreach="partners" t-as="o">
+<!--                <t t-call="website.layout">-->
+                <t t-call="portal.portal_layout">
+
+                    <div class="row container">
+                        <div class="col-auto col-3" style="backgroud-color:white;">
+                            <div class="container mb64" style="flex-wrap:wrap;backgroud-color:white;">
+
+                                    <ul class="list-group list-group-flush flex-wrap flex-row flex-lg-column">
+                                        <li class="list-group-item flex-grow-1">
+                                        <div>
+                                            <h1 style="font-size:40px; font-color:#6CB14F;text-align:center">
+                                                <p t-field="o.amount_total"/>
+                                            </h1>
+                                        </div>
+                                        </li>
+                                        <li class="list-group-item flex-grow-1">
+                                            <div class="btn-group  flex-grow-1 mr-1 mb-1">
+                                        <a class="btn btn-primary"
+                                           title="Download">
+                                            <i class="fa fa-download"/> Download</a>
+                                    </div>
+<!--                                             t-attf-href="/my/orders/{{o.id}}"-->
+                                        <div class="btn-group flex-grow-1 mb-1">
+                                            <a class="btn btn-primary"
+                                               style="text-align:center"
+
+                                               title="Print">
+                                                <i class="fa fa-print"/>
+                                                Print
+                                            </a>
+                                        </div>
+                                        </li>
+                                        <li t-if="o.user_id" class="list-group-item flex-grow-1">
+                                            <div class="small mb-1">
+                                                <strong class="text-muted">Salesperson</strong>
+                                            </div>
+                                            <div class="row flex-nowrap">
+                                                <div class="col flex-grow-0 pr-2">
+                                                    <img class="rounded-circle mr4 float-left o_portal_contact_img"
+                                                         t-att-src="image_data_uri(o.user_id.avatar_1024)"
+                                                         alt="Contact"/>
+                                                </div>
+                                                <div class="col pl-0" style="min-width: 150px">
+                                                    <span t-field="o.user_id"
+                                                          t-options='{"widget": "contact", "fields": ["name", "phone"], "no_marker": True}'/>
+                                                    <a href="#discussion" class="small">
+                                                        <i class="fa fa-comment"></i>
+                                                        Send message
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                            </div>
+
+                        </div>
+
+                    <div  class="col">
+                    <div class="container">
+
+                    <t t-call="web.external_layout">
+
+                        <div class="oe_structure"/>
+                        <h2 class="mt16">
+                            <t>
+                                <span>Order #</span>
+                            </t>
+                            <span t-field="o.name"/>
+                        </h2>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Client :</strong>
+                                <p class="m-0" t-field="o.partner_id"/>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Phone :</strong>
+                                <p class="m-0" t-field="o.partner_id.phone"/>
+                            </div>
+                        </div>
+                        <div class="row mt-4 mb-4">
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Address :</strong>
+                                <p class="m-0" t-field="o.partner_id.street"/>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Order Date:</strong>
+                                <p class="m-0" t-field="o.date_order"/>
+                            </div>
+                            <div class="col-auto col-3 mw-100 mb-2">
+                                <strong>Salesperson:</strong>
+                                <p class="m-0" t-field="o.user_id"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <t t-if="o">
+                        <table class="table">
+                            <thead  class="thead-dark">
+                                <tr>
+                                    <th scope="col">Poduct</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Taxes</th>
+                                    <th scope="col">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="o.order_line" t-as="line">
+                                    <td scope="row">
+
+                                            <a t-attf-href="'/shop/%s', %(slug(line)">
+                                                <span t-esc="line.product_id.name"/>
+                                            </a>
+                                    </td>
+                                    <td scope="row">
+                                        <span t-field="line.price_unit"/>
+                                    </td>
+                                    <td class="o_data_cell o_field_cell o_many2many_tags_cell" tabindex="-1">
+                                        <div class="o_field_many2manytags o_field_widget o_field_empty" name="tax_id"> </div>
+                                    </td>
+
+                                    <td scope="row">
+                                        <span t-field="line.price_subtotal"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </t>
+
+
+                    </t>
+
+
+                  </div>
+                        </div>
+                    </div>
+                </t>
+
+              </tr>
+        </template>
+
+    </data>
+</odoo>

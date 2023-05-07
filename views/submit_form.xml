@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="sale_order_submit" name="sale order submit">
+            <t t-call="website.layout">
+                <div class="container">
+                    <div class="row clearfix">
+                        <div class="col-md-12 table-responsive">
+                        <h1 style="font-size:50px; font-color:#6CB14F; text-align:center">Contact Us</h1>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <form action="/create/saleorder/" id="form_submit" method="post">
+                        <div>
+                            <div>
+                                <label for="partner_id">Name :</label>
+                                <select  name="partner_id" class="form-control link-style">
+                                    <t t-foreach="partners" t-as="o">
+                                        <option t-att-value="o.id">
+                                            <t t-esc="o.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label>Phone:</label>
+                            <input type="text" class="form-control s_website_form_input"  placeholder="Enter phone"/>
+                        </div>
+                        <div>
+                            <div>
+                                <label>Description:</label>
+                            </div>
+                            <div>
+                                <textarea class="form-control s_website_form_input" placeholder="Description"/>
+                            </div>
+                        </div>
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <div class="clearfix oe_login_buttons">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
+
+<!--                        t-attf-href="/contactus-thank-you/"-->
+                    </form>
+                </div>
+
+            </t>
+        </template>
+        <record id="submit_menu" model="website.menu">
+            <field name="name">submit_form</field>
+            <field name="url">/get/submitform/</field>
+            <field name="parent_id" ref="website.main_menu"/>
+            <field name="sequence" type="int">11</field>
+        </record>
+    </data>
+</odoo>
+
+
+
